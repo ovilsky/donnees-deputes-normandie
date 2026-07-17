@@ -1,35 +1,35 @@
 import requests
 import csv
 
-# Liste des adresses de synthèse (Profils + Statistiques d'activité)
+# On reprend les URLs exactes qui ont fonctionné à l'étape précédente !
 URLS_A_TESTER = [
-    "https://nosparlementaires.fr/synthese/json",
-    "https://www.nosparlementaires.fr/synthese/json",
-    "https://www.nosdeputes.fr/synthese/json"
+    "https://www.nosparlementaires.fr/deputes/json",
+    "https://nosparlementaires.fr/deputes/json",
+    "https://www.nosdeputes.fr/deputes/json"
 ]
 
 # Filtres pour la Normandie
 DEPARTEMENTS_NUMEROS = ["14", "27", "50", "61", "76"]
 DEPARTEMENTS_NOMS = ["calvados", "eure", "manche", "orne", "seine-maritime"]
 
-def extraire_synthese_globale():
+def extraire_donnees_globales():
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) JournalismeDonneesNormandie/1.0'
     }
     
     for url in URLS_A_TESTER:
-        print(f"Tentative de récupération de la synthèse sur : {url} ...")
+        print(f"Tentative de connexion à : {url} ...")
         try:
-            response = requests.get(url, headers=headers, timeout=25)
+            response = requests.get(url, headers=headers, timeout=20)
             if response.status_code == 200:
                 data = response.json()
                 liste = data.get('deputes', [])
                 
                 if len(liste) > 0:
-                    print(f"-> Succès ! Données d'activité de {len(liste)} députés trouvées.")
+                    print(f"-> Succès ! Fichier trouvé avec {len(liste)} députés.")
                     return liste
                 else:
-                    print("-> Serveur joint, mais fichier vide. Essai de l'adresse suivante...")
+                    print("-> Serveur joint, mais liste vide. Essai de l'adresse suivante...")
             else:
                 print(f"-> Code erreur serveur : {response.status_code}")
         except Exception as e:
@@ -37,7 +37,7 @@ def extraire_synthese_globale():
             
     return []
 
-def filtrer_et_enrichir_normands(liste_globale):
+def filtrer_et_extraire_stats(liste_globale):
     deputes_normands = []
 
     for item in liste_globale:
@@ -50,26 +50,26 @@ def filtrer_et_enrichir_normands(liste_globale):
         est_normand = (dept_num in DEPARTEMENTS_NUMEROS) or any(nom in dept_nom for nom in DEPARTEMENTS_NOMS)
         
         if est_normand:
-            # On extrait l'identité ET les statistiques clés d'activité
+            # Extraction combinée du profil ET des stats d'activité présentes dans le flux
             deputes_normands.append({
-                # Infos Profil
+                # Profil
                 'nom': depute.get('nom'),
                 'departement': depute.get('nom_circo'),
                 'numero_departement': dept_num if dept_num in DEPARTEMENTS_NUMEROS else 'Normandie',
                 'circonscription': depute.get('num_circo'),
                 'groupe_politique': depute.get('groupe_sigle'),
                 
-                # Infos Activité (Présence)
+                # Activité & Présence (Sécurisé avec .get(..., 0) si la métrique est absente)
                 'semaines_presence': depute.get('semaines_presence', 0),
                 'commissions_presences': depute.get('commissions_presences', 0),
-                'interventions_hemicycle': depute.get('interventions_longues', 0), # Interventions significatives
+                'interventions_hemicycle': depute.get('interventions_longues', depute.get('interventions_hemicycle', 0)),
                 
-                # Infos Activité (Travail législatif)
+                # Travail législatif
                 'amendements_proposes': depute.get('amendements_proposes', 0),
-                'amendements_signes': depute.get('amendements_cosignes', 0),
+                'amendements_signes': depute.get('amendements_cosignes', depute.get('amendements_signes', 0)),
                 'amendements_adoptes': depute.get('amendements_adoptes', 0),
                 
-                # Infos Activité (Prise de parole / Questions)
+                # Prises de parole
                 'questions_ecrites': depute.get('questions_ecrites', 0),
                 'questions_orales': depute.get('questions_orales', 0),
                 
@@ -81,18 +81,17 @@ def filtrer_et_enrichir_normands(liste_globale):
     return deputes_normands
 
 # --- Lancement du traitement ---
-liste_brute = extraire_synthese_globale()
+liste_brute = extraire_donnees_globales()
 
 if not liste_brute:
-    raise Exception("Impossible de récupérer le fichier de synthèse d'activité.")
+    raise Exception("Toutes les URLs ont échoué. Impossible de récupérer les profils.")
 
-deputes = filtrer_et_enrichir_normands(liste_brute)
+deputes = filtrer_et_extraire_stats(liste_brute)
 
 if deputes:
-    print(f"Filtrage réussi : {len(deputes)} députés normands analysés.")
+    print(f"Filtrage réussi : {len(deputes)} députés normands isolés avec leurs statistiques.")
     nom_fichier = 'deputes_normands.csv'
     
-    # Définition des colonnes du nouveau fichier CSV
     colonnes = [
         'nom', 'departement', 'numero_departement', 'circonscription', 'groupe_politique',
         'semaines_presence', 'commissions_presences', 'interventions_hemicycle',
@@ -105,6 +104,6 @@ if deputes:
         writer.writeheader()
         writer.writerows(deputes)
         
-    print(f"Le fichier enrichi '{nom_fichier}' a été mis à jour sur GitHub.")
+    print(f"Le fichier complet '{nom_fichier}' a été sauvegardé sur votre espace GitHub.")
 else:
-    print("Erreur : Aucun député normand trouvé dans le fichier de synthèse.")
+    print("Erreur : Aucun député n'a correspondu aux critères normands.")
