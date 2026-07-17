@@ -68,5 +68,4 @@ if deputes:
         writer.writerows(deputes)
     print(f"Le fichier '{nom_fichier}' a été mis à jour avec succès.")
 else:
-    # Si la liste est vide, on lève une erreur pour bloquer le robot proprement avant la sauvegarde
     raise Exception("L'extraction a échoué. Aucun député normand n'a pu être récupéré.")
