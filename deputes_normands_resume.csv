@@ -1,7 +1,21 @@
-uid,nom_complet,groupe,departement,circonscription,mandat_debut,votes_total,votes_pour,votes_contre,abstentions
-,Inconnu,NI,Normandie,,,0,0,0,0
-,Inconnu,NI,Normandie,,,0,0,0,0
-,Inconnu,NI,Normandie,,,0,0,0,0
-,Inconnu,NI,Normandie,,,0,0,0,0
-,Inconnu,NI,Normandie,,,0,0,0,0
-,Inconnu,NI,Normandie,,,0,0,0,0
+uid,nom_complet,groupe,departement,circonscription,votes_total,votes_pour,votes_contre,abstentions
+,Identité non lue,Non inscrit,Calvados,1,0,0,0,0
+,Identité non lue,Non inscrit,Calvados,2,0,0,0,0
+,Identité non lue,Non inscrit,Calvados,3,0,0,0,0
+,Identité non lue,Non inscrit,Calvados,4,0,0,0,0
+,Identité non lue,Non inscrit,Calvados,5,0,0,0,0
+,Identité non lue,Non inscrit,Calvados,6,0,0,0,0
+,Identité non lue,Non inscrit,Eure,1,0,0,0,0
+,Identité non lue,Non inscrit,Eure,2,0,0,0,0
+,Identité non lue,Non inscrit,Eure,3,0,0,0,0
+,Identité non lue,Non inscrit,Eure,4,0,0,0,0
+,Identité non lue,Non inscrit,Manche,1,0,0,0,0
+,Identité non lue,Non inscrit,Manche,4,0,0,0,0
+,Identité non lue,Non inscrit,Orne,3,0,0,0,0
+,Identité non lue,Non inscrit,Seine-Maritime,3,0,0,0,0
+,Identité non lue,Non inscrit,Seine-Maritime,4,0,0,0,0
+,Identité non lue,Non inscrit,Seine-Maritime,5,0,0,0,0
+,Identité non lue,Non inscrit,Seine-Maritime,6,0,0,0,0
+,Identité non lue,Non inscrit,Seine-Maritime,7,0,0,0,0
+,Identité non lue,Non inscrit,Seine-Maritime,8,0,0,0,0
+,Identité non lue,Non inscrit,Seine-Maritime,9,0,0,0,0

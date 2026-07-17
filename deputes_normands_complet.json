@@ -24,7 +24,9 @@
       "groupe_uid": "PO845401",
       "groupe_abrev": "RN",
       "groupe_libelle": "Rassemblement National"
-    }
+    },
+    "meta_departement": "Calvados",
+    "meta_circonscription": 1
   },
   {
     "type": "deputy",
@@ -51,7 +53,9 @@
       "groupe_uid": "PO845485",
       "groupe_abrev": "LIOT",
       "groupe_libelle": "Libertés, Indépendants, Outre-mer et Territoires"
-    }
+    },
+    "meta_departement": "Calvados",
+    "meta_circonscription": 2
   },
   {
     "type": "deputy",
@@ -78,7 +82,9 @@
       "groupe_uid": "PO845485",
       "groupe_abrev": "LIOT",
       "groupe_libelle": "Libertés, Indépendants, Outre-mer et Territoires"
-    }
+    },
+    "meta_departement": "Calvados",
+    "meta_circonscription": 3
   },
   {
     "type": "deputy",
@@ -105,7 +111,9 @@
       "groupe_uid": "PO845419",
       "groupe_abrev": "SOC",
       "groupe_libelle": "Socialistes et apparentés"
-    }
+    },
+    "meta_departement": "Calvados",
+    "meta_circonscription": 4
   },
   {
     "type": "deputy",
@@ -132,7 +140,9 @@
       "groupe_uid": "PO845439",
       "groupe_abrev": "ECOS",
       "groupe_libelle": "Écologiste et Social"
-    }
+    },
+    "meta_departement": "Calvados",
+    "meta_circonscription": 5
   },
   {
     "type": "deputy",
@@ -159,6 +169,414 @@
       "groupe_uid": "PO845439",
       "groupe_abrev": "ECOS",
       "groupe_libelle": "Écologiste et Social"
-    }
+    },
+    "meta_departement": "Calvados",
+    "meta_circonscription": 6
+  },
+  {
+    "type": "deputy",
+    "attributes": {
+      "deputy": {
+        "uid": "PA793992",
+        "prenom": "Henri",
+        "nom": "Alfandari",
+        "legislature": 17,
+        "circ_num": 3,
+        "circ_departement": "Indre-et-Loire",
+        "groupe_uid": "PO845470",
+        "groupe_abrev": "HOR",
+        "groupe_libelle": "Horizons & Indépendants"
+      }
+    },
+    "deputy": {
+      "uid": "PA793992",
+      "prenom": "Henri",
+      "nom": "Alfandari",
+      "legislature": 17,
+      "circ_num": 3,
+      "circ_departement": "Indre-et-Loire",
+      "groupe_uid": "PO845470",
+      "groupe_abrev": "HOR",
+      "groupe_libelle": "Horizons & Indépendants"
+    },
+    "meta_departement": "Eure",
+    "meta_circonscription": 1
+  },
+  {
+    "type": "deputy",
+    "attributes": {
+      "deputy": {
+        "uid": "PA793912",
+        "prenom": "Sylvain",
+        "nom": "Carrière",
+        "legislature": 17,
+        "circ_num": 8,
+        "circ_departement": "Hérault",
+        "groupe_uid": "PO845413",
+        "groupe_abrev": "LFI-NFP",
+        "groupe_libelle": "La France insoumise - Nouveau Front Populaire"
+      }
+    },
+    "deputy": {
+      "uid": "PA793912",
+      "prenom": "Sylvain",
+      "nom": "Carrière",
+      "legislature": 17,
+      "circ_num": 8,
+      "circ_departement": "Hérault",
+      "groupe_uid": "PO845413",
+      "groupe_abrev": "LFI-NFP",
+      "groupe_libelle": "La France insoumise - Nouveau Front Populaire"
+    },
+    "meta_departement": "Eure",
+    "meta_circonscription": 2
+  },
+  {
+    "type": "deputy",
+    "attributes": {
+      "deputy": {
+        "uid": "PA793744",
+        "prenom": "Anne",
+        "nom": "Stambach-Terrenoir",
+        "legislature": 17,
+        "circ_num": 2,
+        "circ_departement": "Haute-Garonne",
+        "groupe_uid": "PO845413",
+        "groupe_abrev": "LFI-NFP",
+        "groupe_libelle": "La France insoumise - Nouveau Front Populaire"
+      }
+    },
+    "deputy": {
+      "uid": "PA793744",
+      "prenom": "Anne",
+      "nom": "Stambach-Terrenoir",
+      "legislature": 17,
+      "circ_num": 2,
+      "circ_departement": "Haute-Garonne",
+      "groupe_uid": "PO845413",
+      "groupe_abrev": "LFI-NFP",
+      "groupe_libelle": "La France insoumise - Nouveau Front Populaire"
+    },
+    "meta_departement": "Eure",
+    "meta_circonscription": 3
+  },
+  {
+    "type": "deputy",
+    "attributes": {
+      "deputy": {
+        "uid": "PA793394",
+        "prenom": "Arthur",
+        "nom": "Delaporte",
+        "legislature": 17,
+        "circ_num": 2,
+        "circ_departement": "Calvados",
+        "groupe_uid": "PO845419",
+        "groupe_abrev": "SOC",
+        "groupe_libelle": "Socialistes et apparentés"
+      }
+    },
+    "deputy": {
+      "uid": "PA793394",
+      "prenom": "Arthur",
+      "nom": "Delaporte",
+      "legislature": 17,
+      "circ_num": 2,
+      "circ_departement": "Calvados",
+      "groupe_uid": "PO845419",
+      "groupe_abrev": "SOC",
+      "groupe_libelle": "Socialistes et apparentés"
+    },
+    "meta_departement": "Eure",
+    "meta_circonscription": 4
+  },
+  {
+    "type": "deputy",
+    "attributes": {
+      "deputy": {
+        "uid": "PA720728",
+        "prenom": "Jean-Paul",
+        "nom": "Mattei",
+        "legislature": 17,
+        "circ_num": 2,
+        "circ_departement": "Pyrénées-Atlantiques",
+        "groupe_uid": "PO845454",
+        "groupe_abrev": "DEM",
+        "groupe_libelle": "Les Démocrates"
+      }
+    },
+    "deputy": {
+      "uid": "PA720728",
+      "prenom": "Jean-Paul",
+      "nom": "Mattei",
+      "legislature": 17,
+      "circ_num": 2,
+      "circ_departement": "Pyrénées-Atlantiques",
+      "groupe_uid": "PO845454",
+      "groupe_abrev": "DEM",
+      "groupe_libelle": "Les Démocrates"
+    },
+    "meta_departement": "Manche",
+    "meta_circonscription": 1
+  },
+  {
+    "type": "deputy",
+    "attributes": {
+      "deputy": {
+        "uid": "PA795228",
+        "prenom": "Nadège",
+        "nom": "Abomangoli",
+        "legislature": 17,
+        "circ_num": 10,
+        "circ_departement": "Seine-Saint-Denis",
+        "groupe_uid": "PO845413",
+        "groupe_abrev": "LFI-NFP",
+        "groupe_libelle": "La France insoumise - Nouveau Front Populaire"
+      }
+    },
+    "deputy": {
+      "uid": "PA795228",
+      "prenom": "Nadège",
+      "nom": "Abomangoli",
+      "legislature": 17,
+      "circ_num": 10,
+      "circ_departement": "Seine-Saint-Denis",
+      "groupe_uid": "PO845413",
+      "groupe_abrev": "LFI-NFP",
+      "groupe_libelle": "La France insoumise - Nouveau Front Populaire"
+    },
+    "meta_departement": "Manche",
+    "meta_circonscription": 4
+  },
+  {
+    "type": "deputy",
+    "attributes": {
+      "deputy": {
+        "uid": "PA719024",
+        "prenom": "Christophe",
+        "nom": "Blanchet",
+        "legislature": 17,
+        "circ_num": 4,
+        "circ_departement": "Calvados",
+        "groupe_uid": "PO845454",
+        "groupe_abrev": "DEM",
+        "groupe_libelle": "Les Démocrates"
+      }
+    },
+    "deputy": {
+      "uid": "PA719024",
+      "prenom": "Christophe",
+      "nom": "Blanchet",
+      "legislature": 17,
+      "circ_num": 4,
+      "circ_departement": "Calvados",
+      "groupe_uid": "PO845454",
+      "groupe_abrev": "DEM",
+      "groupe_libelle": "Les Démocrates"
+    },
+    "meta_departement": "Orne",
+    "meta_circonscription": 3
+  },
+  {
+    "type": "deputy",
+    "attributes": {
+      "deputy": {
+        "uid": "PA795778",
+        "prenom": "Jean-Philippe",
+        "nom": "Tanguy",
+        "legislature": 17,
+        "circ_num": 4,
+        "circ_departement": "Somme",
+        "groupe_uid": "PO845401",
+        "groupe_abrev": "RN",
+        "groupe_libelle": "Rassemblement National"
+      }
+    },
+    "deputy": {
+      "uid": "PA795778",
+      "prenom": "Jean-Philippe",
+      "nom": "Tanguy",
+      "legislature": 17,
+      "circ_num": 4,
+      "circ_departement": "Somme",
+      "groupe_uid": "PO845401",
+      "groupe_abrev": "RN",
+      "groupe_libelle": "Rassemblement National"
+    },
+    "meta_departement": "Seine-Maritime",
+    "meta_circonscription": 3
+  },
+  {
+    "type": "deputy",
+    "attributes": {
+      "deputy": {
+        "uid": "PA795808",
+        "prenom": "Sabrina",
+        "nom": "Sebaihi",
+        "legislature": 17,
+        "circ_num": 4,
+        "circ_departement": "Hauts-de-Seine",
+        "groupe_uid": "PO845439",
+        "groupe_abrev": "ECOS",
+        "groupe_libelle": "Écologiste et Social"
+      }
+    },
+    "deputy": {
+      "uid": "PA795808",
+      "prenom": "Sabrina",
+      "nom": "Sebaihi",
+      "legislature": 17,
+      "circ_num": 4,
+      "circ_departement": "Hauts-de-Seine",
+      "groupe_uid": "PO845439",
+      "groupe_abrev": "ECOS",
+      "groupe_libelle": "Écologiste et Social"
+    },
+    "meta_departement": "Seine-Maritime",
+    "meta_circonscription": 4
+  },
+  {
+    "type": "deputy",
+    "attributes": {
+      "deputy": {
+        "uid": "PA795270",
+        "prenom": "Marie-Agnès",
+        "nom": "Poussier-Winsback",
+        "legislature": 17,
+        "circ_num": 9,
+        "circ_departement": "Seine-Maritime",
+        "groupe_uid": "PO845470",
+        "groupe_abrev": "HOR",
+        "groupe_libelle": "Horizons & Indépendants"
+      }
+    },
+    "deputy": {
+      "uid": "PA795270",
+      "prenom": "Marie-Agnès",
+      "nom": "Poussier-Winsback",
+      "legislature": 17,
+      "circ_num": 9,
+      "circ_departement": "Seine-Maritime",
+      "groupe_uid": "PO845470",
+      "groupe_abrev": "HOR",
+      "groupe_libelle": "Horizons & Indépendants"
+    },
+    "meta_departement": "Seine-Maritime",
+    "meta_circonscription": 5
+  },
+  {
+    "type": "deputy",
+    "attributes": {
+      "deputy": {
+        "uid": "PA794838",
+        "prenom": "Didier",
+        "nom": "Lemaire",
+        "legislature": 17,
+        "circ_num": 3,
+        "circ_departement": "Haut-Rhin",
+        "groupe_uid": "PO845470",
+        "groupe_abrev": "HOR",
+        "groupe_libelle": "Horizons & Indépendants"
+      }
+    },
+    "deputy": {
+      "uid": "PA794838",
+      "prenom": "Didier",
+      "nom": "Lemaire",
+      "legislature": 17,
+      "circ_num": 3,
+      "circ_departement": "Haut-Rhin",
+      "groupe_uid": "PO845470",
+      "groupe_abrev": "HOR",
+      "groupe_libelle": "Horizons & Indépendants"
+    },
+    "meta_departement": "Seine-Maritime",
+    "meta_circonscription": 6
+  },
+  {
+    "type": "deputy",
+    "attributes": {
+      "deputy": {
+        "uid": "PA794146",
+        "prenom": "Julie",
+        "nom": "Laernoes",
+        "legislature": 17,
+        "circ_num": 4,
+        "circ_departement": "Loire-Atlantique",
+        "groupe_uid": "PO845439",
+        "groupe_abrev": "ECOS",
+        "groupe_libelle": "Écologiste et Social"
+      }
+    },
+    "deputy": {
+      "uid": "PA794146",
+      "prenom": "Julie",
+      "nom": "Laernoes",
+      "legislature": 17,
+      "circ_num": 4,
+      "circ_departement": "Loire-Atlantique",
+      "groupe_uid": "PO845439",
+      "groupe_abrev": "ECOS",
+      "groupe_libelle": "Écologiste et Social"
+    },
+    "meta_departement": "Seine-Maritime",
+    "meta_circonscription": 7
+  },
+  {
+    "type": "deputy",
+    "attributes": {
+      "deputy": {
+        "uid": "PA795244",
+        "prenom": "Stéphane",
+        "nom": "Lenormand",
+        "legislature": 17,
+        "circ_num": 1,
+        "circ_departement": "Saint-Pierre-et-Miquelon",
+        "groupe_uid": "PO845485",
+        "groupe_abrev": "LIOT",
+        "groupe_libelle": "Libertés, Indépendants, Outre-mer et Territoires"
+      }
+    },
+    "deputy": {
+      "uid": "PA795244",
+      "prenom": "Stéphane",
+      "nom": "Lenormand",
+      "legislature": 17,
+      "circ_num": 1,
+      "circ_departement": "Saint-Pierre-et-Miquelon",
+      "groupe_uid": "PO845485",
+      "groupe_abrev": "LIOT",
+      "groupe_libelle": "Libertés, Indépendants, Outre-mer et Territoires"
+    },
+    "meta_departement": "Seine-Maritime",
+    "meta_circonscription": 8
+  },
+  {
+    "type": "deputy",
+    "attributes": {
+      "deputy": {
+        "uid": "PA794442",
+        "prenom": "Laurence",
+        "nom": "Robert-Dehault",
+        "legislature": 17,
+        "circ_num": 2,
+        "circ_departement": "Haute-Marne",
+        "groupe_uid": "PO845401",
+        "groupe_abrev": "RN",
+        "groupe_libelle": "Rassemblement National"
+      }
+    },
+    "deputy": {
+      "uid": "PA794442",
+      "prenom": "Laurence",
+      "nom": "Robert-Dehault",
+      "legislature": 17,
+      "circ_num": 2,
+      "circ_departement": "Haute-Marne",
+      "groupe_uid": "PO845401",
+      "groupe_abrev": "RN",
+      "groupe_libelle": "Rassemblement National"
+    },
+    "meta_departement": "Seine-Maritime",
+    "meta_circonscription": 9
   }
 ]
