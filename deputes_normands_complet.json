@@ -1,0 +1,164 @@
+[
+  {
+    "type": "deputy",
+    "attributes": {
+      "deputy": {
+        "uid": "PA796118",
+        "prenom": "Bénédicte",
+        "nom": "Auzanot",
+        "legislature": 17,
+        "circ_num": 2,
+        "circ_departement": "Vaucluse",
+        "groupe_uid": "PO845401",
+        "groupe_abrev": "RN",
+        "groupe_libelle": "Rassemblement National"
+      }
+    },
+    "deputy": {
+      "uid": "PA796118",
+      "prenom": "Bénédicte",
+      "nom": "Auzanot",
+      "legislature": 17,
+      "circ_num": 2,
+      "circ_departement": "Vaucluse",
+      "groupe_uid": "PO845401",
+      "groupe_abrev": "RN",
+      "groupe_libelle": "Rassemblement National"
+    }
+  },
+  {
+    "type": "deputy",
+    "attributes": {
+      "deputy": {
+        "uid": "PA607619",
+        "prenom": "Paul",
+        "nom": "Molac",
+        "legislature": 17,
+        "circ_num": 4,
+        "circ_departement": "Morbihan",
+        "groupe_uid": "PO845485",
+        "groupe_abrev": "LIOT",
+        "groupe_libelle": "Libertés, Indépendants, Outre-mer et Territoires"
+      }
+    },
+    "deputy": {
+      "uid": "PA607619",
+      "prenom": "Paul",
+      "nom": "Molac",
+      "legislature": 17,
+      "circ_num": 4,
+      "circ_departement": "Morbihan",
+      "groupe_uid": "PO845485",
+      "groupe_abrev": "LIOT",
+      "groupe_libelle": "Libertés, Indépendants, Outre-mer et Territoires"
+    }
+  },
+  {
+    "type": "deputy",
+    "attributes": {
+      "deputy": {
+        "uid": "PA721486",
+        "prenom": "Christophe",
+        "nom": "Naegelen",
+        "legislature": 17,
+        "circ_num": 3,
+        "circ_departement": "Vosges",
+        "groupe_uid": "PO845485",
+        "groupe_abrev": "LIOT",
+        "groupe_libelle": "Libertés, Indépendants, Outre-mer et Territoires"
+      }
+    },
+    "deputy": {
+      "uid": "PA721486",
+      "prenom": "Christophe",
+      "nom": "Naegelen",
+      "legislature": 17,
+      "circ_num": 3,
+      "circ_departement": "Vosges",
+      "groupe_uid": "PO845485",
+      "groupe_abrev": "LIOT",
+      "groupe_libelle": "Libertés, Indépendants, Outre-mer et Territoires"
+    }
+  },
+  {
+    "type": "deputy",
+    "attributes": {
+      "deputy": {
+        "uid": "PA795156",
+        "prenom": "Fatiha",
+        "nom": "Keloua Hachi",
+        "legislature": 17,
+        "circ_num": 8,
+        "circ_departement": "Seine-Saint-Denis",
+        "groupe_uid": "PO845419",
+        "groupe_abrev": "SOC",
+        "groupe_libelle": "Socialistes et apparentés"
+      }
+    },
+    "deputy": {
+      "uid": "PA795156",
+      "prenom": "Fatiha",
+      "nom": "Keloua Hachi",
+      "legislature": 17,
+      "circ_num": 8,
+      "circ_departement": "Seine-Saint-Denis",
+      "groupe_uid": "PO845419",
+      "groupe_abrev": "SOC",
+      "groupe_libelle": "Socialistes et apparentés"
+    }
+  },
+  {
+    "type": "deputy",
+    "attributes": {
+      "deputy": {
+        "uid": "PA794022",
+        "prenom": "Jérémie",
+        "nom": "Iordanoff",
+        "legislature": 17,
+        "circ_num": 5,
+        "circ_departement": "Isère",
+        "groupe_uid": "PO845439",
+        "groupe_abrev": "ECOS",
+        "groupe_libelle": "Écologiste et Social"
+      }
+    },
+    "deputy": {
+      "uid": "PA794022",
+      "prenom": "Jérémie",
+      "nom": "Iordanoff",
+      "legislature": 17,
+      "circ_num": 5,
+      "circ_departement": "Isère",
+      "groupe_uid": "PO845439",
+      "groupe_abrev": "ECOS",
+      "groupe_libelle": "Écologiste et Social"
+    }
+  },
+  {
+    "type": "deputy",
+    "attributes": {
+      "deputy": {
+        "uid": "PA793664",
+        "prenom": "Marie",
+        "nom": "Pochon",
+        "legislature": 17,
+        "circ_num": 3,
+        "circ_departement": "Drôme",
+        "groupe_uid": "PO845439",
+        "groupe_abrev": "ECOS",
+        "groupe_libelle": "Écologiste et Social"
+      }
+    },
+    "deputy": {
+      "uid": "PA793664",
+      "prenom": "Marie",
+      "nom": "Pochon",
+      "legislature": 17,
+      "circ_num": 3,
+      "circ_departement": "Drôme",
+      "groupe_uid": "PO845439",
+      "groupe_abrev": "ECOS",
+      "groupe_libelle": "Écologiste et Social"
+    }
+  }
+]
