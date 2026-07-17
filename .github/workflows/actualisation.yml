@@ -26,17 +26,13 @@ jobs:
 
       - name: 5. Sauvegarder le CSV généré
         run: |
+   
           git config --global user.name 'Robot GitHub'
           git config --global user.email 'action@github.com'
           
-          # On vérifie si le fichier existe vraiment avant de l'ajouter
-          if [ -f deputes_normands.csv ]; then
-            echo "Le fichier CSV existe. Sauvegarde en cours..."
-            git add deputes_normands.csv
-            git diff --quiet && git diff --staged --quiet || git commit -m "Mise à jour quotidienne des données"
-            git push
-          else
-            echo "ERREUR CRUCIALE : Le script Python (Etape 4) n'a pas généré le fichier 'deputes_normands.csv'."
-            echo "Veuillez consulter les lignes de texte de l'Étape 4 pour comprendre pourquoi l'API a échoué."
-            exit 1
-          fi
+          # On dit à Git d'ajouter TOUS les nouveaux fichiers générés par le script
+          git add deputes_normands_complet.json deputes_normands_resume.csv
+          
+          # On enregistre et on pousse sur le dépôt uniquement s'il y a du changement
+          git diff --quiet && git diff --staged --quiet || git commit -m "Mise à jour des données Civix"
+          git push  
