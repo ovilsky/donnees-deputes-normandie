@@ -1,16 +1,15 @@
 import requests
 import csv
 
-# Le vrai site officiel de NosDéputés
+# URL officielle de l'API
 API_URL = "https://www.nosdeputes.fr/deputes/enmandat/json"
 
-# Nos 5 départements normands
-DEPARTEMENTS_NORMANDS = ["14", "27", "50", "61", "76"]
+# Nos filtres pour la Normandie
+DEPARTEMENTS_NUMEROS = ["14", "27", "50", "61", "76"]
+DEPARTEMENTS_NOMS = ["calvados", "eure", "manche", "orne", "seine-maritime"]
 
 def get_deputes_normands():
     print("Connexion à l'API NosDéputés.fr...")
-    
-    # On feint d'être un navigateur classique pour éviter le blocage robot
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) JournalismeDonneesNormandie/1.0'
     }
@@ -23,21 +22,41 @@ def get_deputes_normands():
         return []
     
     if response.status_code != 200:
-        print("Le site NosDéputés a refusé la connexion automatique.")
         return []
 
     data = response.json()
+    
+    # --- BLOC DE DÉBOGAGE (Pour inspecter la structure en cas de souci) ---
+    print(f"Type de données racine : {type(data)}")
+    if isinstance(data, dict):
+        print(f"Clés trouvées à la racine du JSON : {list(data.keys())}")
+        liste_globale = data.get('deputes', [])
+    else:
+        liste_globale = data if isinstance(data, list) else []
+        
+    print(f"Nombre total de députés dans l'API nationale : {len(liste_globale)}")
+    if len(liste_globale) > 0:
+        print(f"Structure brute du premier élément pour vérification : {liste_globale[0]}")
+    # ---------------------------------------------------------------------
+
     deputes_normands = []
 
-    # Extraction des données selon la structure de NosDéputés
-    for item in data.get('deputes', []):
-        depute = item.get('depute', {})
+    for item in liste_globale:
+        # On extrait la fiche du député, qu'elle soit encapsulée ou directe
+        depute = item.get('depute', item) if isinstance(item, dict) else {}
         
-        if str(depute.get('num_deptmap')) in DEPARTEMENTS_NORMANDS:
+        # Récupération des informations de localisation
+        dept_num = str(depute.get('num_deptmap', depute.get('num_departement', ''))).strip()
+        dept_nom = str(depute.get('nom_circo', depute.get('departement', ''))).lower().strip()
+        
+        # Le député est-il normand ? (Vérification par numéro OU par nom)
+        est_normand = (dept_num in DEPARTEMENTS_NUMEROS) or any(nom in dept_nom for nom in DEPARTEMENTS_NOMS)
+        
+        if est_normand:
             deputes_normands.append({
                 'nom': depute.get('nom'),
                 'departement': depute.get('nom_circo'),
-                'numero_departement': depute.get('num_deptmap'),
+                'numero_departement': dept_num if dept_num in DEPARTEMENTS_NUMEROS else 'Normandie',
                 'circonscription': depute.get('num_circo'),
                 'groupe_politique': depute.get('groupe_sigle'),
                 'identifiant_api': depute.get('slug'),
@@ -50,7 +69,7 @@ def get_deputes_normands():
 deputes = get_deputes_normands()
 
 if deputes:
-    print(f"Succès : {len(deputes)} députés normands récupérés.")
+    print(f"Succès : {len(deputes)} députés normands trouvés.")
     nom_fichier = 'deputes_normands.csv'
     colonnes = ['nom', 'departement', 'numero_departement', 'circonscription', 'groupe_politique', 'identifiant_api', 'url_nosdeputes']
     
@@ -58,6 +77,7 @@ if deputes:
         writer = csv.DictWriter(file, fieldnames=colonnes)
         writer.writeheader()
         writer.writerows(deputes)
-    print(f"Le fichier '{nom_fichier}' a été créé avec succès sur votre dépôt.")
+    print(f"Le fichier '{nom_fichier}' a été créé avec succès.")
 else:
-    raise Exception("L'extraction a échoué. Impossible de générer le fichier CSV.")
+    print("Erreur : Aucun député n'a correspondu aux critères normands.")
+    raise Exception("L'extraction a échoué. La liste filtrée est vide.")
