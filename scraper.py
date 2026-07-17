@@ -1,55 +1,54 @@
 import requests
 import csv
 
-# URL officielle de l'API
-API_URL = "https://www.nosdeputes.fr/deputes/enmandat/json"
+# Liste mise à jour avec le nouveau domaine internet
+URLS_A_TESTER = [
+    "https://www.nosparlementaires.fr/deputes/json",
+    "https://nosparlementaires.fr/deputes/json",
+    "https://www.nosdeputes.fr/deputes/json",
+    "https://www.nosdeputes.fr/deputes/enmandat/json"
+]
 
-# Nos filtres pour la Normandie
+# Filtres pour isoler la Normandie
 DEPARTEMENTS_NUMEROS = ["14", "27", "50", "61", "76"]
 DEPARTEMENTS_NOMS = ["calvados", "eure", "manche", "orne", "seine-maritime"]
 
-def get_deputes_normands():
-    print("Connexion à l'API NosDéputés.fr...")
+def extraire_liste_globale():
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) JournalismeDonneesNormandie/1.0'
     }
     
-    try:
-        response = requests.get(API_URL, headers=headers, timeout=20)
-        print(f"Réponse du serveur reçue (Code {response.status_code})")
-    except Exception as e:
-        print(f"Erreur réseau lors de l'accès à NosDéputés : {e}")
-        return []
-    
-    if response.status_code != 200:
-        return []
+    for url in URLS_A_TESTER:
+        print(f"Tentative de connexion à : {url} ...")
+        try:
+            response = requests.get(url, headers=headers, timeout=20)
+            if response.status_code == 200:
+                data = response.json()
+                liste = data.get('deputes', [])
+                
+                if len(liste) > 0:
+                    print(f"-> Succès ! {len(liste)} députés trouvés sur cette URL.")
+                    return liste
+                else:
+                    print("-> Le serveur a répondu, mais la liste est vide. Essai de l'adresse suivante...")
+            else:
+                print(f"-> Code erreur serveur : {response.status_code}")
+        except Exception as e:
+            print(f"-> Impossible de joindre cette URL : {e}")
+            
+    return []
 
-    data = response.json()
-    
-    # --- BLOC DE DÉBOGAGE (Pour inspecter la structure en cas de souci) ---
-    print(f"Type de données racine : {type(data)}")
-    if isinstance(data, dict):
-        print(f"Clés trouvées à la racine du JSON : {list(data.keys())}")
-        liste_globale = data.get('deputes', [])
-    else:
-        liste_globale = data if isinstance(data, list) else []
-        
-    print(f"Nombre total de députés dans l'API nationale : {len(liste_globale)}")
-    if len(liste_globale) > 0:
-        print(f"Structure brute du premier élément pour vérification : {liste_globale[0]}")
-    # ---------------------------------------------------------------------
-
+def filtrer_deputes_normands(liste_globale):
     deputes_normands = []
 
     for item in liste_globale:
-        # On extrait la fiche du député, qu'elle soit encapsulée ou directe
         depute = item.get('depute', item) if isinstance(item, dict) else {}
         
-        # Récupération des informations de localisation
+        # Récupération de la localisation
         dept_num = str(depute.get('num_deptmap', depute.get('num_departement', ''))).strip()
         dept_nom = str(depute.get('nom_circo', depute.get('departement', ''))).lower().strip()
         
-        # Le député est-il normand ? (Vérification par numéro OU par nom)
+        # On vérifie si le député est normand
         est_normand = (dept_num in DEPARTEMENTS_NUMEROS) or any(nom in dept_nom for nom in DEPARTEMENTS_NOMS)
         
         if est_normand:
@@ -65,11 +64,16 @@ def get_deputes_normands():
             
     return deputes_normands
 
-# --- Lancement du traitement ---
-deputes = get_deputes_normands()
+# --- Exécution du traitement ---
+liste_brute = extraire_liste_globale()
+
+if not liste_brute:
+    raise Exception("Toutes les URLs de l'API ont renvoyé une liste vide ou ont échoué.")
+
+deputes = filtrer_deputes_normands(liste_brute)
 
 if deputes:
-    print(f"Succès : {len(deputes)} députés normands trouvés.")
+    print(f"Filtrage réussi : {len(deputes)} députés normands isolés.")
     nom_fichier = 'deputes_normands.csv'
     colonnes = ['nom', 'departement', 'numero_departement', 'circonscription', 'groupe_politique', 'identifiant_api', 'url_nosdeputes']
     
@@ -77,7 +81,6 @@ if deputes:
         writer = csv.DictWriter(file, fieldnames=colonnes)
         writer.writeheader()
         writer.writerows(deputes)
-    print(f"Le fichier '{nom_fichier}' a été créé avec succès.")
+    print(f"Le fichier '{nom_fichier}' a été généré avec succès sur votre espace GitHub.")
 else:
-    print("Erreur : Aucun député n'a correspondu aux critères normands.")
-    raise Exception("L'extraction a échoué. La liste filtrée est vide.")
+    print("Erreur : Aucun député de la liste n'a correspondu aux critères normands.")
