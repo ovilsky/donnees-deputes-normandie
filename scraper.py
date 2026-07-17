@@ -2,104 +2,108 @@ import requests
 import csv
 import time
 
-# URLs de base pour l'annuaire
-URLS_ANNUAIRE = [
-    "https://www.nosparlementaires.fr/deputes/json",
-    "https://www.nosdeputes.fr/deputes/json"
-]
+# Configuration de l'API Civix
+API_BASE_URL = "https://www.civix.fr/api"
 
-# Filtres géographiques pour la Normandie
-DEPARTEMENTS_NUMEROS = ["14", "27", "50", "61", "76"]
-DEPARTEMENTS_NOMS = ["calvados", "eure", "manche", "orne", "seine-maritime"]
+# Filtres géographiques pour cibler la Normandie
+DEPARTEMENTS_NORMANDS = ["14", "27", "50", "61", "76"]
 
-def obtenir_liste_base():
-    headers = {'User-Agent': 'Mozilla/5.0 JournalismeDonneesNormandie/1.0'}
-    for url in URLS_ANNUAIRE:
-        print(f"Extraction de l'annuaire sur : {url} ...")
-        try:
-            res = requests.get(url, headers=headers, timeout=15)
-            if res.status_code == 200 and len(res.json().get('deputes', [])) > 0:
-                return res.json().get('deputes', [])
-            print(f"-> URL vide ou code {res.status_code}")
-        except Exception as e:
-            print(f"-> Erreur sur {url} : {e}")
-    return []
-
-# 1. On récupère d'abord l'annuaire global
-liste_globale = obtenir_liste_base()
-if not liste_globale:
-    raise Exception("Impossible de charger l'annuaire des députés.")
-
-# 2. On filtre pour ne garder que les profils de base des Normands
-profils_normands = []
-for item in liste_globale:
-    depute = item.get('depute', item) if isinstance(item, dict) else {}
-    dept_num = str(depute.get('num_deptmap', depute.get('num_departement', ''))).strip()
-    dept_nom = str(depute.get('nom_circo', depute.get('departement', ''))).lower().strip()
+def collecter_deputes_civix():
+    headers = {
+        'User-Agent': 'Mozilla/5.0 JournalismeDonneesNormandie/1.0',
+        'Accept': 'application/json'
+    }
     
-    if (dept_num in DEPARTEMENTS_NUMEROS) or any(nom in dept_nom for nom in DEPARTEMENTS_NOMS):
-        profils_normands.append({
-            'nom': depute.get('nom'),
-            'slug': depute.get('slug'),
-            'dept_num': dept_num if dept_num in DEPARTEMENTS_NUMEROS else 'Normandie',
-            'circo': depute.get('num_circo'),
-            'groupe': depute.get('groupe_sigle')
-        })
-
-print(f"\n{len(profils_normands)} députés normands identifiés. Début de la collecte des statistiques individuelles...")
-
-# 3. On interroge la page de chaque député normand pour obtenir ses vrais chiffres
-donnees_finales = []
-headers = {'User-Agent': 'Mozilla/5.0 JournalismeDonneesNormandie/1.0'}
-
-for i, p in enumerate(profils_normands, 1):
-    # On teste le domaine principal, sinon le secondaire
-    url_fiche = f"https://www.nosparlementaires.fr/{p['slug']}/json"
-    print(f"[{i}/{len(profils_normands)}] Récupération de l'activité de : {p['nom']} ...")
+    # 1. Requête vers le point d'accès des parlementaires / députés de Civix
+    url = f"{API_BASE_URL}/parlementaires"
+    print(f"Connexion à l'API Civix : {url} ...")
     
     try:
-        response = requests.get(url_fiche, headers=headers, timeout=15)
-        if response.status_code != 200:
-            # Sécurité : essai sur l'ancien domaine si le nouveau renvoie une erreur
-            url_fiche = f"https://www.nosdeputes.fr/{p['slug']}/json"
-            response = requests.get(url_fiche, headers=headers, timeout=15)
-            
-        if response.status_code == 200:
-            data = response.json().get('depute', {})
-            
-            # On extrait les vraies statistiques d'activité actives
-            p['semaines_presence'] = data.get('semaines_presence', 0)
-            p['commissions_presences'] = data.get('commissions_presences', 0)
-            p['interventions_hemicycle'] = data.get('interventions_longues', 0)
-            p['amendements_proposes'] = data.get('amendements_proposes', 0)
-            p['amendements_signes'] = data.get('amendements_cosignes', 0)
-            p['amendements_adoptes'] = data.get('amendements_adoptes', 0)
-            p['questions_ecrites'] = data.get('questions_ecrites', 0)
-            p['questions_orales'] = data.get('questions_orales', 0)
-            p['url_source'] = f"https://www.nosparlementaires.fr/{p['slug']}"
-            donnees_finales.append(p)
-        else:
-            print(f"  -> Impossible de charger la fiche de {p['nom']} (Code {response.status_code})")
-    except Exception as e:
-        print(f"  -> Erreur réseau pour {p['nom']} : {e}")
+        # L'API Civix peut nécessiter de paginer ou de filtrer par type, nous récupérons la liste
+        # Note : Si leur documentation spécifie un paramètre de type (ex: ?fonction=depute), il s'ajoute ici
+        response = requests.get(url, headers=headers, params={"mandat": "depute"}, timeout=20)
         
-    # Une micro-pause de 0.5 seconde entre chaque député pour être un robot poli et éviter les blocages
-    time.sleep(0.5)
+        if response.status_code == 200:
+            donnees = response.json()
+            # Selon la structure standard Civix, les résultats sont souvent dans une clé 'results' ou 'data'
+            liste_parlementaires = donnees.get('results', donnees.get('data', donnees))
+            print(f"-> {len(liste_parlementaires)} parlementaires trouvés au total.")
+            return liste_parlementaires
+        else:
+            print(f"-> Erreur API Civix (Code {response.status_code})")
+            return []
+    except Exception as e:
+        print(f"-> Échec de la connexion à l'API Civix : {e}")
+        return []
 
-# 4. Écriture du fichier CSV final complet
-if donnees_finales:
+def extraire_et_filtrer_normands(liste_globale):
+    normands = []
+    
+    for p in liste_globale:
+        # Extraction adaptative selon la structure JSON de l'API Civix
+        # Civix sépare généralement l'identité, le mandat (circonscription, département) et les statistiques
+        departement_info = p.get('departement', p.get('num_departement', ''))
+        
+        # Nettoyage du numéro de département (ex: '14' ou '014')
+        dept_code = str(departement_info).strip().lstrip('0')
+        
+        if dept_code in DEPARTEMENTS_NORMANDS:
+            # Récupération des statistiques d'activité fournies par Civix
+            # Civix agrège souvent ces données sous un objet 'statistiques' ou 'activite'
+            stats = p.get('statistiques', p.get('activite', p))
+            
+            normands.append({
+                # État civil & Politique
+                'nom': f"{p.get('prenom', '')} {p.get('nom', '')}".strip() or p.get('nom_complet'),
+                'departement': p.get('nom_departement', dept_code),
+                'numero_departement': dept_code,
+                'circonscription': p.get('circonscription', p.get('num_circo')),
+                'groupe_politique': p.get('groupe', p.get('groupe_sigle', p.get('parti'))),
+                
+                # Métriques de présence et assiduité (Standardisées depuis l'API Civix)
+                'semaines_presence': stats.get('semaines_presence', stats.get('presence_semaines', 0)),
+                'commissions_presences': stats.get('commissions_presences', stats.get('presence_commissions', 0)),
+                'interventions_hemicycle': stats.get('interventions', stats.get('prises_de_parole', 0)),
+                
+                # Travail législatif & amendements
+                'amendements_proposes': stats.get('amendements_proposes', stats.get('amendements_deposes', 0)),
+                'amendements_signes': stats.get('amendements_cosignes', stats.get('amendements_signes', 0)),
+                'amendements_adoptes': stats.get('amendements_adoptes', 0),
+                
+                # Questions
+                'questions_ecrites': stats.get('questions_ecrites', 0),
+                'questions_orales': stats.get('questions_orales', 0),
+                
+                # Identifiant unique Civix pour d'éventuels futurs croisements
+                'id_civix': p.get('id')
+            })
+            
+    return normands
+
+# --- Exécution du pipeline Civix ---
+liste_brute = collecter_deputes_civix()
+
+if not liste_brute:
+    raise Exception("Impossible de récupérer les données depuis l'API Civix.")
+
+deputes_normands = extraire_et_filtrer_normands(liste_brute)
+
+if deputes_normands:
+    print(f"Filtrage géographique : {len(deputes_normands)} députés normands extraits avec succès.")
+    
     nom_fichier = 'deputes_normands.csv'
     colonnes = [
-        'nom', 'slug', 'dept_num', 'circo', 'groupe',
+        'nom', 'departement', 'numero_departement', 'circonscription', 'groupe_politique',
         'semaines_presence', 'commissions_presences', 'interventions_hemicycle',
         'amendements_proposes', 'amendements_signes', 'amendements_adoptes',
-        'questions_ecrites', 'questions_orales', 'url_source'
+        'questions_ecrites', 'questions_orales', 'id_civix'
     ]
     
     with open(nom_fichier, mode='w', encoding='utf-8', newline='') as file:
         writer = csv.DictWriter(file, fieldnames=colonnes)
         writer.writeheader()
-        writer.writerows(donnees_finales)
-    print(f"\nFélicitations ! Le fichier '{nom_fichier}' contient désormais les profils ET les vrais chiffres d'activité.")
+        writer.writerows(deputes_normands)
+        
+    print(f"Le fichier '{nom_fichier}' mis à jour via Civix est prêt sur votre dépôt GitHub.")
 else:
-    print("\nErreur : Aucune donnée d'activité n'a pu être collectée.")
+    print("Attention : Aucun député n'a correspondu aux départements normands (14, 27, 50, 61, 76).")
